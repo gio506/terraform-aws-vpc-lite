@@ -4,6 +4,9 @@ vpc_cidr           = "10.42.0.0/16"
 public_subnet_cidr = "10.42.1.0/24"
 public_subnet_az   = "us-east-1a"
 
+ssh_ingress_cidrs  = ["203.0.113.10/32"]
+http_ingress_cidrs = ["0.0.0.0/0"]
+
 common_tags = {
   ManagedBy   = "terraform"
   Environment = "dev"

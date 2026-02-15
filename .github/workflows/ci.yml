@@ -38,4 +38,4 @@ jobs:
 
       - name: Terraform Plan (skips if AWS secrets missing)
         if: ${{ env.AWS_ACCESS_KEY_ID != '' && env.AWS_SECRET_ACCESS_KEY != '' && env.AWS_REGION != '' }}
-        run: terraform plan -input=false -no-color
+        run: terraform plan -input=false -lock=false -no-color -out=tfplan

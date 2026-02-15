@@ -54,10 +54,16 @@ terraform apply tfplan
 terraform destroy
 ```
 
+## Inputs you should review first
+
+- `ssh_ingress_cidrs`: defaults to `0.0.0.0/0` for beginner simplicity; lock this down for real use.
+- `http_ingress_cidrs`: set to allowed client ranges.
+- `vpc_cidr` and `public_subnet_cidr`: avoid overlap with existing networks.
+
 ## Safety notes
 
 - Start in a **sandbox/test AWS account** first.
-- Restrict CIDRs (especially SSH `0.0.0.0/0`) before production use.
+- Restrict CIDRs (especially SSH) before production use.
 - Always review `terraform plan` output before `apply`.
 - Never commit real secrets (`*.tfvars` with credentials, access keys).
 - Prefer IAM roles or short-lived credentials instead of long-lived keys.

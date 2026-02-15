@@ -28,6 +28,18 @@ variable "public_subnet_az" {
   default     = "us-east-1a"
 }
 
+variable "ssh_ingress_cidrs" {
+  description = "Allowed CIDR ranges for SSH (port 22)"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+variable "http_ingress_cidrs" {
+  description = "Allowed CIDR ranges for HTTP (port 80)"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
 variable "common_tags" {
   description = "Common tags applied to all resources"
   type        = map(string)
