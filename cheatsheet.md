@@ -25,7 +25,7 @@ terraform validate
 terraform plan
 ```
 
-## Notes
+## Security quick tips
+- Replace `ssh_ingress_cidrs` with office/VPN IPs.
 - Keep credentials outside Terraform files.
 - Use least-privilege IAM permissions.
-- Tighten security group ingress for real environments.

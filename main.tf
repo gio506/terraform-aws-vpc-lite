@@ -62,7 +62,7 @@ resource "aws_route_table_association" "public" {
 
 resource "aws_security_group" "public" {
   name        = "${var.project_name}-public-sg"
-  description = "Allow SSH and HTTP from the internet"
+  description = "Allow SSH and HTTP from configured CIDR ranges"
   vpc_id      = aws_vpc.main.id
 
   ingress {
@@ -70,7 +70,7 @@ resource "aws_security_group" "public" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.ssh_ingress_cidrs
   }
 
   ingress {
@@ -78,7 +78,7 @@ resource "aws_security_group" "public" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.http_ingress_cidrs
   }
 
   egress {
