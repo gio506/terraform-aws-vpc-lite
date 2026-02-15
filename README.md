@@ -70,11 +70,10 @@ terraform destroy
 
 ## CI pipeline stages
 
-The workflow runs 4 stages:
+The workflow runs 3 stages:
 1. `terraform fmt -check`
 2. `terraform validate`
-3. `tflint`
-4. `terraform plan` (no apply)
+3. `tflint` + `terraform plan` (real no-apply when secrets exist, simulation when secrets are missing)
 
 ### GitHub Actions secrets for plan
 
@@ -83,4 +82,4 @@ Set these repository secrets when you want CI `terraform plan` to run with AWS a
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_REGION`
 
-If secrets are missing, the plan step is skipped cleanly.
+If secrets are missing, the workflow runs a simulation-style plan command (`terraform plan -refresh=false`) so the pipeline still completes.
