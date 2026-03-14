@@ -50,20 +50,26 @@ resource "aws_security_group" "public" {
   description = "Allow SSH and HTTP from configured CIDR ranges"
   vpc_id      = aws_vpc.main.id
 
-  ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = var.ssh_ingress_cidrs
+  dynamic "ingress" {
+    for_each = length(var.ssh_ingress_cidrs) > 0 ? [var.ssh_ingress_cidrs] : []
+    content {
+      description = "SSH"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = ingress.value
+    }
   }
 
-  ingress {
-    description = "HTTP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = var.http_ingress_cidrs
+  dynamic "ingress" {
+    for_each = length(var.http_ingress_cidrs) > 0 ? [var.http_ingress_cidrs] : []
+    content {
+      description = "HTTP"
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      cidr_blocks = ingress.value
+    }
   }
 
   egress {

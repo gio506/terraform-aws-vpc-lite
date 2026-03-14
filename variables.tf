@@ -41,7 +41,7 @@ variable "public_subnet_az" {
 variable "ssh_ingress_cidrs" {
   description = "Allowed CIDR ranges for SSH (port 22)"
   type        = list(string)
-  default     = ["0.0.0.0/0"]
+  default     = []
 
   validation {
     condition     = alltrue([for cidr in var.ssh_ingress_cidrs : can(cidrhost(cidr, 0))])
@@ -63,7 +63,7 @@ variable "http_ingress_cidrs" {
 variable "common_tags" {
   description = "Common tags applied to all resources"
   type        = map(string)
-  default     = {
+  default = {
     ManagedBy   = "terraform"
     Environment = "dev"
   }
