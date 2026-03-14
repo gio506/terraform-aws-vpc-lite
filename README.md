@@ -11,14 +11,20 @@ Beginner-friendly Terraform project to create a **basic AWS network**:
 
 ```text
 .
-├── main.tf                   # Core infrastructure resources and provider config
-├── variables.tf              # Input variables with defaults
-├── outputs.tf                # Useful IDs returned after apply
-├── cheatsheet.md             # Quick reference for commands and file purpose
+├── .github/workflows/ci.yml      # 4-stage CI pipeline for fmt, validate, lint, and plan
+├── CHEATSHEET.md                 # Quick reference for commands and file purpose
+├── FILES_EXPLAINED.md            # File-by-file purpose map
 ├── examples/
-│   └── tfvars.example        # Example variable values you can copy
-└── .github/workflows/
-    └── ci.yml                # CI pipeline for fmt/validate/lint/plan
+│   └── tfvars.example            # Example variable values you can copy
+├── main.tf                       # Root module wiring and provider config
+├── modules/
+│   └── vpc-lite/
+│       ├── main.tf               # Reusable VPC, subnet, IGW, route table, and SG resources
+│       ├── outputs.tf            # Module outputs
+│       └── variables.tf          # Module inputs
+├── outputs.tf                    # Useful IDs returned after apply
+├── variables.tf                  # Input variables with defaults
+└── versions.tf                   # Terraform and provider version constraints
 ```
 
 ## Prerequisites
@@ -70,10 +76,11 @@ terraform destroy
 
 ## CI pipeline stages
 
-The workflow runs 3 stages:
+The workflow runs 4 stages:
 1. `terraform fmt -check`
 2. `terraform validate`
-3. `tflint` + `terraform plan` (real no-apply when secrets exist, simulation when secrets are missing)
+3. `tflint`
+4. `terraform plan` (real no-apply when secrets exist, simulation when secrets are missing)
 
 ### GitHub Actions secrets for plan
 
