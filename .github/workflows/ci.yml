@@ -22,7 +22,6 @@ jobs:
             "variables.tf"
             "outputs.tf"
             "versions.tf"
-            "modules/vpc-lite/main.tf"
           )
           for file in "${required_files[@]}"; do
             test -f "$file" || {
@@ -30,6 +29,10 @@ jobs:
               exit 1
             }
           done
+          test -d modules/vpc-lite || {
+            echo "Missing required module directory: modules/vpc-lite"
+            exit 1
+          }
 
   fmt_check:
     name: Stage 2 - Terraform Fmt Check
