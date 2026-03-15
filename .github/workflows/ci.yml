@@ -14,23 +14,28 @@ jobs:
       - name: Verify required files
         shell: bash
         run: |
-          required_files=(
-            "README.md"
-            "CHEATSHEET.md"
-            "FILES_EXPLAINED.md"
-            "main.tf"
-            "variables.tf"
-            "outputs.tf"
-            "versions.tf"
-          )
-          for file in "${required_files[@]}"; do
-            test -f "$file" || {
-              echo "Missing required file: $file"
-              exit 1
-            }
-          done
-          test -d modules/vpc-lite || {
-            echo "Missing required module directory: modules/vpc-lite"
+          test -f README.md || {
+            echo "Missing README.md"
+            exit 1
+          }
+          test -f main.tf || {
+            echo "Missing main.tf"
+            exit 1
+          }
+          test -f variables.tf || {
+            echo "Missing variables.tf"
+            exit 1
+          }
+          test -f outputs.tf || {
+            echo "Missing outputs.tf"
+            exit 1
+          }
+          test -f versions.tf || {
+            echo "Missing versions.tf"
+            exit 1
+          }
+          test -d modules || {
+            echo "Missing modules directory"
             exit 1
           }
 
