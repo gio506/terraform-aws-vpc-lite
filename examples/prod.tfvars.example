@@ -1,0 +1,41 @@
+# prod.tfvars — Production variable overrides
+# Copy this to terraform.tfvars for a real deployment
+# NEVER commit actual credentials. Use environment variables for AWS auth.
+
+# AWS region — choose closest to your users
+aws_region = "us-east-1"
+
+# VPC CIDR — use a range that doesn't overlap with your on-premises network
+vpc_cidr = "10.10.0.0/16"
+
+# Availability zones for multi-AZ redundancy
+availability_zones = ["us-east-1a", "us-east-1b"]
+
+# Public subnets — load balancers and NAT gateways live here
+public_subnet_cidrs = ["10.10.1.0/24", "10.10.2.0/24"]
+
+# Private subnets — application servers and ECS tasks
+private_subnet_cidrs = ["10.10.10.0/24", "10.10.11.0/24"]
+
+# Isolated subnets — databases, caches (no outbound internet)
+isolated_subnet_cidrs = ["10.10.20.0/24", "10.10.21.0/24"]
+
+# Environment tag — shows up on all resources in AWS console
+environment = "production"
+
+# Project name — used in resource naming
+project_name = "my-app"
+
+# Enable NAT Gateway per AZ for high availability
+enable_nat_gateway = true
+single_nat_gateway = false  # true for dev/staging to save cost
+
+# Enable VPC Flow Logs to CloudWatch for audit trail
+enable_flow_logs = true
+flow_log_retention_days = 30
+
+# S3 VPC endpoint (free, saves NAT costs for S3 traffic)
+enable_s3_endpoint = true
+
+# SSM VPC endpoint (for Systems Manager session manager — no SSH needed)
+enable_ssm_endpoint = true
